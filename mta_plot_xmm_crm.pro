@@ -76,7 +76,7 @@ plot,[0,0],[0,0],background=back_color,color=grid_color, $
   charsize=csize,ymargin=[4,7], xmargin=[xleft,xright], $
   xticks=nticks-1,xtickv=doyticks, ytitle="CXO", $
   xtickname=xticklab,xminor=12, $
-  xtitle="DOY (2004)", $
+  xtitle="DOY (2005)", $
   ytickformat='no_axis_labels'
 b=where(time ge xmin and time le xmax,bnum)
 if (bnum gt 0) then begin
