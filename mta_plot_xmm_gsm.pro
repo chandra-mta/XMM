@@ -149,6 +149,7 @@ for i=0,n_elements(sec)-1,1 do begin
   if (Ccrmreg(b(0)) eq 3) then crm_color(i)=190
 endfor ; for i=0,n_elements(cxo_sec)-1,1 do begin
 plots,x_gsm/Re,y_gsm/Re,color=crm_color,linestyle=2
+xmm_color=crm_color
 
 sec_mark=curr_time
 b=where(abs(sec-sec_mark) lt 1000.0,bnum)
@@ -301,4 +302,21 @@ for i=0,n_elements(cxo_x_gsm)-1,1 do begin
 endfor
 free_lun,cdat
 
+crm_color=100
+xmm_color=200
+plot,sec,x_gsm/Re,color=grid_color,psym=3, $
+  xtitle="time",ytitle="X_GSM (R!lE!n)",/nodata
+oplot,sec,x_gsm/Re,color=xmm_color,psym=3
+oplot,cxo_sec,cxo_x_gsm/Re,color=crm_color
+write_gif,"/data/mta4/www/RADIATION/XMM/time_x.gif",tvrd()
+plot,sec,y_gsm/Re,color=grid_color,psym=3, $
+  xtitle="time",ytitle="Y_GSM (R!lE!n)",/nodata
+oplot,sec,y_gsm/Re,color=xmm_color,psym=3
+oplot,cxo_sec,cxo_y_gsm/Re,color=crm_color
+write_gif,"/data/mta4/www/RADIATION/XMM/time_y.gif",tvrd()
+plot,sec,z_gsm/Re,color=grid_color,psym=3, $
+  xtitle="time",ytitle="Z_GSM (R!lE!n)",/nodata
+oplot,sec,z_gsm/Re,color=xmm_color,psym=3
+oplot,cxo_sec,cxo_z_gsm/Re,color=crm_color
+write_gif,"/data/mta4/www/RADIATION/XMM/time_z.gif",tvrd()
 end
