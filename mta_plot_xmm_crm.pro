@@ -9,7 +9,7 @@ PRO MTA_PLOT_XMM_CRM,XMIN,XMAX,PLOTX=plotx
 crmfile="crmreg_xmm.dat"
 readcol,crmfile,sec,R,Xgsm,Ygsm,Zgsm,crmreg, $
   format='L,F,F,F,F,I',skipline=5
-time=(sec/60./60./24.)-2190.0-366.0 ; 2005 days
+time=(sec/60./60./24.)-2190.0-366.0-365.-365. ; 2007 days
 s=sort(time)  ; sort just in case
 time=time(s)
 crmreg=crmreg(s)
@@ -67,7 +67,7 @@ endif ; if (bnum gt 0) then begin
 crmfile="crmreg_cxo.dat"
 readcol,crmfile,sec,R,Xgsm,Ygsm,Zgsm,crmreg, $
   format='L,F,F,F,F,I',skipline=5
-time=(sec/60./60./24.)-2190.0-366.0 ; 2005 days
+time=(sec/60./60./24.)-2190.0-366.0-365.-365. ; 2007 days
 s=sort(time)  ; sort just in case
 time=time(s)
 
@@ -76,7 +76,7 @@ plot,[0,0],[0,0],background=back_color,color=grid_color, $
   charsize=csize,ymargin=[4,7], xmargin=[xleft,xright], $
   xticks=nticks-1,xtickv=doyticks, ytitle="CXO", $
   xtickname=xticklab,xminor=12, $
-  xtitle="DOY (2005)", $
+  xtitle="DOY (2007)", $
   ytickformat='no_axis_labels'
 b=where(time ge xmin and time le xmax,bnum)
 if (bnum gt 0) then begin

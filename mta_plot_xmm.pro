@@ -155,7 +155,7 @@ xleft=15 ;set xmargin
 xright=1
 
 ; figure out time ranges and labels
-jday=time_stamp_arc/86400.-2190.0-366.
+jday=time_stamp_arc/86400.-2190.0-366.-365.-365.
 time=jday-1.
 xmin=long(max(jday))-t_arch+1
 xmax=long(max(jday))+1
