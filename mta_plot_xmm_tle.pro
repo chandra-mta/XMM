@@ -8,7 +8,7 @@ tlefile="/proj/rac/ops/ephem/TLE/xmm.spctrk"
 readcol,tlefile,sec,yy,dd,hh,mm,ss,x_eci,y_eci,z_eci,vx,vy,vz, $
   format='L,I,I,I,I,I,F,F,F,F,F,F',skipline=5
 sec=sec-8.83613e+08-86400.0
-time=(sec/60./60./24.)-2190.0-366.0 ; 2005 days
+time=(sec/60./60./24.)-2190.0-366.0-365.-365. ; 2007 days
 
 nel=n_elements(sec)
 es=lonarr(nel)
