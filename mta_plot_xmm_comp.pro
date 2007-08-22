@@ -74,7 +74,7 @@ hec=hec_arc
 
 ymin=min(le1(where(le1 gt 0)))
 ymax=max([le1_arc,le2,hes1,hes2,hec])
-!p.position=[0.10,0.75,0.95,0.96]
+!p.position=[0.10,0.78,0.95,0.96]
 plot,time,le2,background=back_color,color=grid_color, $
   xstyle=1,ystyle=1,xrange=[xmin,xmax],yrange=[ymin,ymax],/nodata, $
   charsize=csize, $
@@ -91,7 +91,7 @@ while(yline lt ymax) do begin
   oplot,[xmin,xmax],[yline,yline],color=grid_color,linestyle=2
   yline=yline*10
 endwhile ; while(yline lt ymax) do begin
-xyouts,xmin,ymax*1.5,"XMM Radiation",/data,charsize=0.9
+xyouts,xmin,ymax*1.5,"XMM Radiation and Orbital Profile",/data,charsize=0.9
 fit=where(time eq min(time))
 fi=fit(0)
 ;xlabp1=0.03 ;xposition for units labels (norm coords)
@@ -331,29 +331,43 @@ xmm_color=200
 
 sec=(sec-283996863.)/86400.+1
 cxo_sec=(cxo_sec-283996863.)/86400.+1
-!p.position=[0.10,0.52,0.95,0.75]
+!p.position=[0.10,0.55,0.95,0.78]
+ymin=min([x_gsm/Re,cxo_x_gsm/Re])
+ymax=max([x_gsm/Re,cxo_x_gsm/Re])
 plot,sec,x_gsm/Re,color=grid_color,psym=3, $
   ytitle="X_GSM (R!lE!n)",/nodata, $
   xticks=nticks-1,xtickv=doyticks, $
-  xtickformat='no_axis_labels',xminor=12,chars=2,xrange=[xmin,xmax]
-oplot,sec,x_gsm/Re,color=xmm_color,psym=3
+  xtickformat='no_axis_labels',xminor=12,chars=2,xrange=[xmin,xmax], $
+  xstyle=1,ystyle=1,yrange=[ymin,ymax]
+oplot,sec,x_gsm/Re,color=xmm_color,linestyle=2
 oplot,cxo_sec,cxo_x_gsm/Re,color=crm_color
 
-!p.position=[0.10,0.29,0.95,0.52]
+!p.position=[0.10,0.32,0.95,0.55]
+ymin=min([y_gsm/Re,cxo_y_gsm/Re])
+ymax=max([y_gsm/Re,cxo_y_gsm/Re])
 plot,sec,y_gsm/Re,color=grid_color,psym=3, $
   ytitle="Y_GSM (R!lE!n)",/nodata, $
   xticks=nticks-1,xtickv=doyticks, $
-  xtickformat='no_axis_labels',xminor=12,chars=2,xrange=[xmin,xmax]
-oplot,sec,y_gsm/Re,color=xmm_color,psym=3
+  xtickformat='no_axis_labels',xminor=12,chars=2,xrange=[xmin,xmax], $
+  xstyle=1,ystyle=1,yrange=[ymin,ymax]
+oplot,sec,y_gsm/Re,color=xmm_color,linestyle=2
 oplot,cxo_sec,cxo_y_gsm/Re,color=crm_color
 
-!p.position=[0.10,0.06,0.95,0.29]
+!p.position=[0.10,0.09,0.95,0.32]
+ymin=min([z_gsm/Re,cxo_z_gsm/Re])
+ymax=max([z_gsm/Re,cxo_z_gsm/Re])
 plot,sec,z_gsm/Re,color=grid_color,psym=3, $
   xtitle="time - DOY 2007",ytitle="Z_GSM (R!lE!n)",/nodata, $
   xticks=nticks-1,xtickv=doyticks, $
-  xminor=12,chars=2,xrange=[xmin,xmax]
-oplot,sec,z_gsm/Re,color=xmm_color,psym=3
+  xminor=12,chars=2,xrange=[xmin,xmax], $
+  xstyle=1,ystyle=1,yrange=[ymin,ymax]
+oplot,sec,z_gsm/Re,color=xmm_color,linestyle=2
 oplot,cxo_sec,cxo_z_gsm/Re,color=crm_color
+
+plots,[0.50,0.60],[0.98,0.98],linestyle=0,color=crm_color,/norm
+xyouts,0.62,0.97,"CXO",color=crm_color,chars=0.9,/norm
+plots,[0.7,0.8],[0.98,0.98],linestyle=2,color=xmm_color,/norm
+xyouts,0.82,0.97,"XMM",color=xmm_color,chars=0.9,/norm
 
 write_gif,'/data/mta4/www/RADIATION/XMM/mta_plot_xmm_comp.gif',tvrd()
 

@@ -14,7 +14,7 @@ readcol,cxofile,cxo_sec,cxo_yy,cxo_dd,cxo_hh,cxo_mm,cxo_ss, $
 cxo_sec=cxo_sec-long(8.83613e+08)-86400L
 cxo_time=cxo_sec/60./60./24.
 
-nel=n_elements(sec)
+nel=n_elements(sec)-2
 es=lonarr(nel)
 x_gsm=fltarr(nel)
 y_gsm=fltarr(nel)
@@ -22,7 +22,7 @@ z_gsm=fltarr(nel)
 mon_days=[31,28,31,30,31,30,31,31,30,31,30,31]
 openw,tunit,"xdate",/get_lun ;debug
 openw,cunit,"xcoords",/get_lun ;debug
-for i=0,n_elements(sec)-1 do begin
+for i=0,n_elements(sec)-3 do begin
   mon_days=[31,28,31,30,31,30,31,31,30,31,30,31]
   leap=2000
   while (yy(i) ge leap) do begin
@@ -50,12 +50,12 @@ endfor ;for i=0,n_elements(sec)-1 do begin
 free_lun,tunit ;debug
 free_lun,cunit ;debug
 
-nel=n_elements(cxo_sec)
+nel=n_elements(cxo_sec)-2
 es=lonarr(nel)
 cxo_x_gsm=fltarr(nel)
 cxo_y_gsm=fltarr(nel)
 cxo_z_gsm=fltarr(nel)
-for i=0,n_elements(cxo_sec)-1 do begin
+for i=0,n_elements(cxo_sec)-3 do begin
   mon_days=[31,28,31,30,31,30,31,31,30,31,30,31]
   leap=2000
   while (cxo_yy(i) ge leap) do begin
@@ -106,8 +106,9 @@ chancsize=0.7    ; char size for channel labels
 
 curr_time=systime(/sec)-8.83613e8
 ;b=where(sec gt curr_time-7*86400)
-b=where(sec gt curr_time-3*86400)
+b=where(sec gt curr_time-0.9*86400. and sec lt curr_time+0.9*86400.)
 sec=sec(b)
+print,min(sec),"min sec"
 x_gsm=x_gsm(b)
 y_gsm=y_gsm(b)
 z_gsm=z_gsm(b)
@@ -117,7 +118,8 @@ z_eci= z_eci(b)
 vx= vx(b)
 vy= vy(b)
 vz= vz(b)
-b=where(cxo_sec gt curr_time-7*86400)
+;b=where(cxo_sec gt curr_time-3*86400.)
+b=where(cxo_sec gt curr_time-1.35*86400. and cxo_sec lt curr_time+1.35*86400.)
 cxo_sec=cxo_sec(b)
 cxo_x_gsm=cxo_x_gsm(b)
 cxo_y_gsm=cxo_y_gsm(b)
@@ -150,6 +152,10 @@ for i=0,n_elements(sec)-1,1 do begin
   if (Ccrmreg(b(0)) eq 3) then crm_color(i)=190
 endfor ; for i=0,n_elements(cxo_sec)-1,1 do begin
 plots,x_gsm/Re,y_gsm/Re,color=crm_color,linestyle=2
+bn=n_elements(x_gsm)
+oplot,[x_gsm[bn-1]/Re,x_gsm[bn-1]/Re], $
+      [y_gsm[bn-1]/Re,y_gsm[bn-1]/Re], color=crm_color[bn-1], $
+      thick=4,psym=1
 xmm_color=crm_color
 
 sec_mark=curr_time
@@ -194,6 +200,10 @@ for i=0,n_elements(cxo_sec)-1,1 do begin
 endfor ; for i=0,n_elements(cxo_sec)-1,1 do begin
 ;print,crm_color ;debugcolor
 plots,cxo_x_gsm/Re,cxo_y_gsm/Re,color=crm_color
+bn=n_elements(cxo_x_gsm)
+oplot,[cxo_x_gsm[bn-1]/Re,cxo_x_gsm[bn-1]/Re], $
+      [cxo_y_gsm[bn-1]/Re,cxo_y_gsm[bn-1]/Re], color=crm_color[bn-1], $
+      thick=4,psym=1
 
 ;sec_mark=max(cxo_sec)
 sec_mark=curr_time
